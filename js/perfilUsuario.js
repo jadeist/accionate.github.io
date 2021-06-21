@@ -57,7 +57,7 @@ logout.addEventListener("click", (e) => {
     e.preventDefault()
     auth.signOut().then(() => {
         console.log("Se cerro sesion exitosamente")
-        location.href = "inicio.html"
+        location.href = "index.html"
     })
 })
 

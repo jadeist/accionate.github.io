@@ -1,4 +1,4 @@
-# grupweb50.github.io
-Ejemplo de bases de datos con Firebase.
+# accionate.github.io
+En accionate conecta con instituciones y voluntarios para lograr un cambio.
 
-https://grupweb50.github.io
+Descubrelo en: https://jadeist.github.io/accionate.github.io/
