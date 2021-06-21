@@ -79,7 +79,7 @@ https://templatemo.com/tm-535-softy-pinko
                 </div>
                 <div class="offset-lg-3 col-lg-6">
                     <div class="center-text">
-                        <p> ¡Obten acceso a las multiples propuestas de asociaciones sin animo de lucro y haz un cambio! </p>
+                        <p> ¡Conecta con potenciales voluntarios para lograr tus objetivos! </p>
                     </div>
                 </div>
             </div>
@@ -88,12 +88,9 @@ https://templatemo.com/tm-535-softy-pinko
             <div class="row">
                 <!-- ***** Contact Text Start ***** -->
                 <div class="col-lg-4 col-md-6 col-sm-12">
-                    <h5 class="margin-bottom-30">¿Eres voluntario?</h5>
+                    <h5 class="margin-bottom-30">¿Eres representante de una asociacion?</h5>
                     <div class="contact-text">
-                        <p>Acccionate está formado de personas que como tú
-                        buscan hacer un cambio apoyando a las
-                        asociaciones sin animo de lucro que luchan por un
-                        mejor mundo y una mejor sociedad para todos.</p>
+                        <p>En accionate podras conocer personas interesadas en tus propuestas y vacantes, con el objetivo de crear el mejor equipo de trabajo que llevaran a tu proyecto a la realidad.</p>
                     </div>
                 </div>
                 <!-- ***** Contact Text End ***** -->
@@ -105,62 +102,60 @@ https://templatemo.com/tm-535-softy-pinko
                           <div class="row">
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="name" type="text" class="form-control" id="name" placeholder="Nombre de la asociacion" required="">
+                                <input type="text" class="form-control" id="associationName" placeholder="Nombre de la asociacion" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="name" type="text" class="form-control" id="name" placeholder="Nombre de la persona a cargo" required="">
+                                <input type="text" class="form-control" id="agentName" placeholder="Nombre de la persona a cargo" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="name" type="text" class="form-control" id="name" placeholder="Categoria" required="">
+                                <input type="text" class="form-control" id="category" placeholder="Categoria(s)" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="name" type="text" class="form-control" id="name" placeholder="Fecha de fundación" required="">
+                                <input type="date" class="form-control" id="foundDate" placeholder="Fecha de fundación" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="email" type="email" class="form-control" id="email" placeholder="Correo electronico" required="">
+                                <input type="email" class="form-control" id="email" placeholder="Correo electronico" required="">
                               </fieldset>
                             </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12">
+                            
+                            <div class="col-lg-12">
                               <fieldset>
-                                <input name="email" type="number" class="form-control" id="email" placeholder="Edad" required="">
-                              </fieldset>
-                            </div>
-                            <div class="col-lg-6 col-md-12 col-sm-12">
-                              <fieldset>
-                                <input name="email" type="text" class="form-control" id="email" placeholder="Ocupacion(es)" required="">
+                                <textarea rows="6" class="form-control" id="associationDescription" placeholder="Descripcion de la institucion" required=""></textarea>
                               </fieldset>
                             </div>
                             <div class="col-lg-12">
                               <fieldset>
-                                <textarea name="message" rows="6" class="form-control" id="message" placeholder="Descripcion de la institucion" required=""></textarea>
+                                <textarea rows="6" class="form-control" id="associationProjectsDescription" placeholder="Descripcion de los proyectos y acciones anteriores y actuales" required=""></textarea>
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="email" type="file" class="form-control" id="email" placeholder="Imagen de perfil" required="">
+                                <label> Logo de la institución </label>
+                                <input  type="file" class="form-control" id="email" placeholder="Logo de la institucion" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="email" type="file" class="form-control" id="email" placeholder="Documento probatorio de identidad" required="">
+                                <label> Documento probatorio de institucion oficial (opcional) </label>
+                                <input type="file" class="form-control" id="identification" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="email" type="password" class="form-control" id="email" placeholder="Contraseña" required="">
+                                <input type="password" class="form-control" id="password" placeholder="Contraseña" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-6 col-md-12 col-sm-12">
                               <fieldset>
-                                <input name="email" type="password" class="form-control" id="email" placeholder="Confirmacion de contraseña" required="">
+                                <input type="password" class="form-control" id="passwordconfirm" placeholder="Confirmacion de contraseña" required="">
                               </fieldset>
                             </div>
                             <div class="col-lg-12">
@@ -215,6 +210,47 @@ https://templatemo.com/tm-535-softy-pinko
     
     <!-- Global Init -->
     <script src="assets/js/custom.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+<!-- Agrega el manejo de autenticación. -->
+<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase-auth.js"> </script>
+
+<script
+    src="https://www.gstatic.com/firebasejs/8.5.0/firebase-storage.js">
+    </script>
+
+<script
+    src="https://www.gstatic.com/firebasejs/8.5.0/firebase-firestore.js">
+    </script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyDOCZD17NOQA__sCjWGLtFDc_QxZ6LNjhU",
+    authDomain: "accionate3cv50.firebaseapp.com",
+    projectId: "accionate3cv50",
+    storageBucket: "accionate3cv50.appspot.com",
+    messagingSenderId: "684444300368",
+    appId: "1:684444300368:web:d03213f90ec5de5d1e0d55"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+
+  const fs = firebase.firestore();
+
+  const storage = firebase.storage()
+
+</script>
+<script type="module" src="js/registrarAsociacion.js" >
+</script>
 
   </body>
 </html>

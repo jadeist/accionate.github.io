@@ -27,12 +27,17 @@ auth.onAuthStateChanged((user) => {
                             .get()
                             .then((snapshot) => {
                                 console.log("Las asociaciones son: " + snapshot.docs)
-                                mostrarAsociaciones(snapshot.docs)
+                                mostrarAsociaciones("vol", snapshot.docs)
                             })
                     }
                     if (rol == "Administrador") {
-                        location.href = "dashboardAdministrador.html"
                         console.log("es admin")
+                        fs.collection("Asociaciones")
+                            .get()
+                            .then((snapshot) => {
+                                console.log("Las asociaciones son: " + snapshot.docs)
+                                mostrarAsociaciones("admin", snapshot.docs)
+                            })
                     }
                 } else {
                     // doc.data() will be undefined in this case
@@ -62,14 +67,17 @@ logout.addEventListener("click", (e) => {
 
 //Traer las asociaciones
 
-const mostrarAsociaciones = (data) => {
+const mostrarAsociaciones = (rol, data) => {
     if (data.length) {
         let html = ""
 
         data.forEach((doc) => {
             var asociacion = doc.data()
 
-            const elemento = `<div class="card">
+            var elemento = ""
+
+            if (rol == "vol") {
+                elemento = `<div class="card">
             <div class="card-header" id="headingOne">
               <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -80,18 +88,98 @@ const mostrarAsociaciones = (data) => {
         
             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
               <div class="card-body">
-                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                ${asociacion.descripcionAsociacion}
               </div>
+            <p>
+              <a class="btn btn-primary" data-toggle="collapse" href="#collapse${asociacion.email}" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Ver propuestas
+              </a>
+            </p>
+            <div class="collapse" id="collapse${asociacion.email}" id="propuestas${asociacion.email}">
+            </div>
             </div>
           </div>`
+            }
+            if (rol == "admin") {
+                elemento = `<div class="card">
+            <div class="card-header" id="headingOne">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  ${asociacion.nombreAsociacion}
+                </button>
+                <button type="button" class="btn btn-success" onClick="${aceptarAsociacion(
+                    asociacion.email
+                )}">Aceptar</button>
+                <button type="button" class="btn btn-danger" onClick="${rechazarAsociacion(
+                    asociacion.email
+                )}">Rechazar</button>
+              </h5>
+            </div>
+        
+            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+              <div class="card-body">
+                ${asociacion.descripcionAsociacion}
+              </div>
+            <p>
+              <a class="btn btn-primary" data-toggle="collapse" href="#collapse${
+                  asociacion.email
+              }" role="button" aria-expanded="false" aria-controls="collapseExample">
+                Ver propuestas
+              </a>
+            </p>
+            <div class="collapse" id="collapse${asociacion.email}" id="propuestas${asociacion.email}">
+            </div>
+            </div>
+          </div>`
+            }
+
             html += elemento
         })
 
         listaAsociacionesHTML.innerHTML = html
+
+        data.forEach((doc) => {
+            var asociacion = doc.data()
+
+            const listaPropuestasHTML = document.querySelector(`#propuestas${asociacion.email}`)
+
+            fs.collection("Propuestas")
+                .where("asociacion", "==", asociacion.email)
+                .get()
+                .then((snapshot) => {
+                    console.log("Las propuestas son: " + snapshot.docs)
+                    mostrarPropuestas(listaPropuestasHTML, snapshot.docs)
+                })
+        })
     } else {
         listaAsociacionesHTML.innerHTML = "<p> No hay asociaciones </p>"
     }
 }
+
+const mostrarPropuestas = (listaPropuestasHTML, data) => {
+    if (data.length) {
+        let html = ""
+
+        data.forEach((doc) => {
+            var propuesta = doc.data()
+
+            const elemento = `<div class="card card-body">
+                <h5>${propuesta.tituloPropuesta}</h5>
+                <p>${propuesta.descripcionPropuesta}</p>
+                <button type="button" class="btn btn-primary" onClick="${aplicarSolicitud()}">Aplicar Solicitud</button>
+                </div>`
+            html += elemento
+        })
+
+        listaPropuestasHTML.innerHTML = html
+    } else {
+        listaPropuestasHTML.innerHTML = "<p> No hay propuestas </p>"
+    }
+}
+
+function rechazarAsociacion(emailAsociacion) {}
+function aceptarAsociacion(emailAsociacion) {}
+function aplicarSolicitud() {}
 
 // //Llenado del formulario de registrar voluntario
 

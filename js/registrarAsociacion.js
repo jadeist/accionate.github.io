@@ -1,4 +1,4 @@
-//Controlador para registrar voluntario
+//Controlador para registrar la asociacion
 
 import { obtenerRolUsuario, subirStorage } from "../js/util.js"
 
@@ -43,7 +43,7 @@ auth.onAuthStateChanged((user) => {
     }
 })
 
-//Llenado del formulario de registrar voluntario
+//Llenado del formulario de registrar asociacion
 
 const signupForm = document.querySelector("#signup-form")
 
@@ -112,52 +112,3 @@ signupForm.addEventListener("submit", (e) => {
         window.alert("La contraseña no coincide con la confirmacion de contraseña")
     }
 })
-
-// const logout = document.querySelector("#boton-logout")
-
-// logout.addEventListener("click", (e) => {
-//     e.preventDefault()
-//     auth.signOut().then(() => {
-//         console.log("Se cerro sesion exitosamente")
-//     })
-// })
-
-// //Traer las asociaciones
-
-// const listaAsociacionesHTML = document.querySelector("#asociaciones")
-
-// const mostrarAsociaciones = (data) => {
-//     if (data.length) {
-//         let html = ""
-
-//         data.forEach((doc) => {
-//             var asociacion = doc.data()
-
-//             const li = `<li class="list-group-item"> <h5> ${asociacion.nombreAsociacion} </h5> <p> </p>  </li>`
-//             html += li
-//         })
-
-//         listaAsociacionesHTML.innerHTML = html
-//     } else {
-//         listaAsociacionesHTML.innerHTML = "<p> No hay asociaciones </p>"
-//     }
-// }
-
-// //Evento para saber si el usuario esta autenticado
-
-// auth.onAuthStateChanged((user) => {
-//     if (user) {
-//         console.log("hay un usuario" + user.email)
-//         //ver asociaciones si el usuario esta logueado
-
-//         fs.collection("Asociaciones")
-//             .get()
-//             .then((snapshot) => {
-//                 console.log("Las asociaciones son: " + snapshot.docs)
-//                 mostrarAsociaciones(snapshot.docs)
-//             })
-//     } else {
-//         console.log("no hay usuario")
-//         mostrarAsociaciones([])
-//     }
-// })
