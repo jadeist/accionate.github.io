@@ -29,11 +29,9 @@ auth.onAuthStateChanged((user) => {
                         document.querySelector("#description").innerHTML = doc.data().descripcion
                     }
                     if (rol == "Administrador") {
-                        location.href = "dashboardAdministrador.html"
                         console.log("es admin")
                     }
                     if (rol == "Asociacion") {
-                        location.href = "dashboardAsociacion.html"
                         console.log("es asociacion")
                     }
                 } else {

@@ -77,7 +77,7 @@ const mostrarAsociaciones = (rol, data) => {
             var elemento = ""
 
             if (rol == "vol") {
-                elemento = `<div class="card">
+                elemento = `<div class="card m-2 p-4">
             <div class="card-header" id="headingOne">
               <h5 class="mb-0">
                 <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -91,26 +91,26 @@ const mostrarAsociaciones = (rol, data) => {
                 ${asociacion.descripcionAsociacion}
               </div>
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#collapse${asociacion.email}" role="button" aria-expanded="false" aria-controls="collapseExample">
+              <a class="btn btn-primary btn-sm m-4" data-toggle="collapse" href="#propuestas${asociacion.username}" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Ver propuestas
               </a>
             </p>
-            <div class="collapse" id="collapse${asociacion.email}" id="propuestas${asociacion.email}">
+            <div class="collapse" id="propuestas${asociacion.username}">
             </div>
             </div>
           </div>`
             }
             if (rol == "admin") {
-                elemento = `<div class="card">
+                elemento = `<div class="card m-2 p-4">
             <div class="card-header" id="headingOne">
               <h5 class="mb-0">
-                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <button class="btn btn-link " data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                   ${asociacion.nombreAsociacion}
                 </button>
-                <button type="button" class="btn btn-success" onClick="${aceptarAsociacion(
+                <button type="button" class="btn btn-success btn-sm m-2" onClick="${aceptarAsociacion(
                     asociacion.email
                 )}">Aceptar</button>
-                <button type="button" class="btn btn-danger" onClick="${rechazarAsociacion(
+                <button type="button" class="btn btn-danger btn-sm m-2" onClick="${rechazarAsociacion(
                     asociacion.email
                 )}">Rechazar</button>
               </h5>
@@ -121,13 +121,13 @@ const mostrarAsociaciones = (rol, data) => {
                 ${asociacion.descripcionAsociacion}
               </div>
             <p>
-              <a class="btn btn-primary" data-toggle="collapse" href="#collapse${
-                  asociacion.email
+              <a class="btn btn-primary btn-sm m-4" data-toggle="collapse" href="#propuestas${
+                  asociacion.username
               }" role="button" aria-expanded="false" aria-controls="collapseExample">
                 Ver propuestas
               </a>
             </p>
-            <div class="collapse" id="collapse${asociacion.email}" id="propuestas${asociacion.email}">
+            <div class="collapse" id="propuestas${asociacion.username}">
             </div>
             </div>
           </div>`
@@ -139,17 +139,28 @@ const mostrarAsociaciones = (rol, data) => {
         listaAsociacionesHTML.innerHTML = html
 
         data.forEach((doc) => {
-            var asociacion = doc.data()
+            var asociacionEmail = String(doc.data().email)
+            var asociacionUsername = String(doc.data().username)
 
-            const listaPropuestasHTML = document.querySelector(`#propuestas${asociacion.email}`)
+            console.log("email de la asociacion de las propuestas", asociacionEmail)
+
+            const listaPropuestasHTML = document.querySelector(`#propuestas${asociacionUsername}`)
 
             fs.collection("Propuestas")
-                .where("asociacion", "==", asociacion.email)
+                .where("asociacion", "==", asociacionEmail)
                 .get()
-                .then((snapshot) => {
-                    console.log("Las propuestas son: " + snapshot.docs)
-                    mostrarPropuestas(listaPropuestasHTML, snapshot.docs)
+                .then((querySnapshot) => {
+                    console.log("Las propuestas son: " + querySnapshot.docs)
+                    mostrarPropuestas(listaPropuestasHTML, querySnapshot.docs)
+                    // querySnapshot.forEach((doc) => {
+                    //     // doc.data() is never undefined for query doc snapshots
+                    //     console.log(doc.id, " => ", doc.data());
+                    // });
                 })
+            // .then((snapshot) => {
+            //     console.log("Las propuestas son: " + snapshot.docs)
+            //     mostrarPropuestas(listaPropuestasHTML, [])
+            // })
         })
     } else {
         listaAsociacionesHTML.innerHTML = "<p> No hay asociaciones </p>"
@@ -163,23 +174,29 @@ const mostrarPropuestas = (listaPropuestasHTML, data) => {
         data.forEach((doc) => {
             var propuesta = doc.data()
 
-            const elemento = `<div class="card card-body">
+            const elemento = `<div class="card card-body p-4">
                 <h5>${propuesta.tituloPropuesta}</h5>
-                <p>${propuesta.descripcionPropuesta}</p>
-                <button type="button" class="btn btn-primary" onClick="${aplicarSolicitud()}">Aplicar Solicitud</button>
+                <p class="m-3">${propuesta.descripcionPropuesta}</p>
+                <br>
+                <form onsubmit="aplicarSolicitud()">
+                <input id="aplicarsolicitud" type="submit" class="btn btn-info btn-sm m-2" value="Aplicar Solicitud">  </input></form>
                 </div>`
             html += elemento
         })
 
         listaPropuestasHTML.innerHTML = html
     } else {
-        listaPropuestasHTML.innerHTML = "<p> No hay propuestas </p>"
+        listaPropuestasHTML.innerHTML = `<div class="card card-body p-4"><p> No hay propuestas </p></div> `
     }
 }
 
 function rechazarAsociacion(emailAsociacion) {}
 function aceptarAsociacion(emailAsociacion) {}
-function aplicarSolicitud() {}
+
+function aplicarSolicitud() {
+    window.alert("se aplicó a la propuesta")
+    return true
+}
 
 // //Llenado del formulario de registrar voluntario
 
